@@ -1,4 +1,3 @@
-import './App.css';
 import InputToDo from './Components/InputToDo';
 
 function App() {
