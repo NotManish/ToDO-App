@@ -4,7 +4,6 @@ function DateAndTime() {
     const [dateTime, setDateTime] = useState("");
 
     useEffect(() => {
-        // Set up the interval
         const intervalId = setInterval(() => {
             const date = new Date();
             const formattedDate = date.toLocaleDateString('en-GB');
@@ -13,13 +12,11 @@ function DateAndTime() {
             setDateTime(currentDateTime);
         }, 1000);
 
-
-        // Cleanup function to clear the interval
         return () => clearInterval(intervalId);
-    }, []); 
+    }, []);
 
     return (
-        <div className="date-time">
+        <div className="text-xl font-medium mb-5">
             <h2>{dateTime}</h2>
         </div>
     );
