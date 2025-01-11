@@ -1,37 +1,43 @@
-import { useState } from "react";
-
-
 function DisplayToDo(props) {
+  const handleComplete = (index) => {
+    const updatedList = props.toDoList.map((item, idx) =>
+      idx === index ? { ...item, isChecked: !item.isChecked } : item
+    );
+    props.setToDoList(updatedList);
+  };
 
-  const [checked, setCheck] = useState(false);
-  let handleComplete = () => {
-    setCheck(!checked);
-  }
-
-  let deleteItem = (index) => {
-    let filteredList = props.toDoList.filter((element, indx) => {
-      return indx !== index;
-    })
+  const deleteItem = (index) => {
+    const filteredList = props.toDoList.filter((_, indx) => indx !== index);
     props.setToDoList(filteredList);
-  }
+  };
 
   return (
-    props.toDoList.map((element, index) => {
-
-      return (
-        <ul>
-          <li>
-            {index + 1})
-            {checked ? <p style={{ textDecoration: "line-through" }}>{element.charAt(0).toUpperCase() + element.slice(1)}</p> :
-              <p>{element.charAt(0).toUpperCase() + element.slice(1)}</p>}
-            <input type="checkbox" onClick={handleComplete}></input>
-            <span>
-              <i className="fa-solid fa-trash-can" onClick={() => { deleteItem(index); }}></i>
-            </span>
-          </li>
-        </ul>
-      )
-    })
-  )
+    props.toDoList.map((element, index) => (
+      <div key={index} className="bg-blue-50 rounded-md mt-5 flex justify-between p-3">
+        <p>
+          {index + 1}){" "}
+          <span className={element.isChecked ? "line-through-red" : ""}>
+            {element.todo.charAt(0).toUpperCase() + element.todo.slice(1)}
+          </span>
+        </p>
+        <div className="flex gap-3">
+          {element.isChecked && <p>Completed</p>}
+          <input
+            type="checkbox"
+            checked={element.isChecked}
+            onChange={() => handleComplete(index)}
+            className="scale-125"
+          />
+          <span>
+            <i
+              className="fa-solid fa-trash-can"
+              onClick={() => deleteItem(index)}
+            ></i>
+          </span>
+        </div>
+      </div>
+    ))
+  );
 }
+
 export default DisplayToDo;
